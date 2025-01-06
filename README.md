@@ -1,8 +1,12 @@
 # CODTECH_Task-1
 Name: Sanskruti Thakur
+
 Company: CODTECH IT SOLUTIONS
+
 ID: CT08DS193
+
 Domain: Data Science
+
 Duration: December 2024 to January 2025
 
 # Overview of the Project
