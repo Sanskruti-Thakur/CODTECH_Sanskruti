@@ -1,0 +1,75 @@
+from sklearn.datasets import make_blobs
+from sklearn.cluster import KMeans, DBSCAN, AgglomerativeClustering
+from sklearn.metrics import silhouette_score, davies_bouldin_score
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
+# Generate synthetic dataset for clustering analysis
+X, _ = make_blobs(n_samples=500, centers=4, cluster_std=1.0, random_state=42)
+
+# Define clustering algorithms with parameters
+clustering_algorithms = {
+    "K-Means": KMeans(n_clusters=4, random_state=42, init='k-means++', n_init=10),
+    "Hierarchical": AgglomerativeClustering(n_clusters=4, linkage='ward'),
+    "DBSCAN": DBSCAN(eps=0.8, min_samples=5)
+}
+
+# Function to visualize clustering results
+def visualize_clusters(X, labels, title):
+    plt.figure(figsize=(8, 6))
+    unique_labels = np.unique(labels)
+    for label in unique_labels:
+        plt.scatter(X[labels == label, 0], X[labels == label, 1], label=f"Cluster {label}")
+    plt.title(title)
+    plt.xlabel("Feature 1")
+    plt.ylabel("Feature 2")
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+# Evaluate each clustering algorithm
+results = {}
+for name, algorithm in clustering_algorithms.items():
+    # Fit the model and predict clusters
+    labels = algorithm.fit_predict(X)
+
+    # Calculate evaluation metrics if clusters are valid
+    if len(set(labels)) > 1:  # Ensure more than one cluster exists
+        silhouette = silhouette_score(X, labels)
+        davies_bouldin = davies_bouldin_score(X, labels)
+    else:
+        silhouette = float('nan')
+        davies_bouldin = float('nan')
+
+    results[name] = {
+        "Silhouette Score": silhouette,
+        "Davies-Bouldin Index": davies_bouldin
+    }
+
+    # Visualize clustering results
+    visualize_clusters(X, labels, f"{name} Clustering")
+
+# Display results with improved formatting
+print("\nClustering Evaluation Results:\n")
+for name, metrics in results.items():
+    print(f"{name}:")
+    print(f"  Silhouette Score: {metrics['Silhouette Score']:.3f}")
+    print(f"  Davies-Bouldin Index: {metrics['Davies-Bouldin Index']:.3f}\n")
+
+# Advanced analysis: Automatically determine the optimal number of clusters for K-Means
+print("Optimal Number of Clusters for K-Means (Elbow Method):")
+inertia_values = []
+k_range = range(1, 11)
+for k in k_range:
+    kmeans = KMeans(n_clusters=k, random_state=42, init='k-means++', n_init=10)
+    kmeans.fit(X)
+    inertia_values.append(kmeans.inertia_)
+
+plt.figure(figsize=(8, 6))
+plt.plot(k_range, inertia_values, marker='o')
+plt.title("Elbow Method for Optimal Clusters")
+plt.xlabel("Number of Clusters")
+plt.ylabel("Inertia")
+plt.grid()
+plt.show()
