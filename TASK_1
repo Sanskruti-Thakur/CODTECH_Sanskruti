@@ -1,0 +1,71 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+
+def load_iris_data():
+    iris_data = load_iris()
+    iris_df = pd.DataFrame(data=iris_data['data'], columns=iris_data['feature_names'])
+    iris_df['species'] = pd.Series(iris_data['target']).map({0: 'setosa', 1: 'versicolor', 2: 'virginica'})
+    return iris_df
+
+def display_data_info(df):
+    print("Dataset Preview:\n", df.head())
+    print("\nDataset Information:")
+    print(df.info())
+    print("\nSummary Statistics:\n", df.describe())
+    print("\nMissing Values:\n", df.isnull().sum())
+    print("\nSpecies Distribution:\n", df['species'].value_counts())
+
+def plot_distributions(df):
+    # Histograms
+    df.hist(bins=15, figsize=(15, 10), color='skyblue', edgecolor='black')
+    plt.suptitle("Histograms of Iris Features", fontsize=16)
+    plt.tight_layout()
+    plt.show()
+
+    # Pairplot
+    sns.pairplot(df, hue="species", markers=["o", "s", "D"])
+    plt.suptitle("Pairplot of Iris Dataset", y=1.02)
+    plt.tight_layout()
+    plt.show()
+
+    # Correlation Heatmap
+    correlation_matrix = df.iloc[:, :-1].corr()
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(correlation_matrix, annot=True, cmap="coolwarm", fmt=".2f")
+    plt.title("Correlation Heatmap of Iris Features")
+    plt.tight_layout()
+    plt.show()
+
+def plot_comparisons(df):
+    # Boxplots
+    plt.figure(figsize=(15, 10))
+    for i, col in enumerate(df.columns[:-1], 1):
+        plt.subplot(2, 2, i)
+        sns.boxplot(data=df, x="species", y=col)
+        plt.title(f"Boxplot of {col}")
+        plt.tight_layout()
+    plt.subplots_adjust(top=0.9)
+    plt.suptitle("Boxplots of Features by Species", fontsize=16)
+    plt.show()
+
+    # Scatter Plot
+    plt.figure(figsize=(8, 6))
+    sns.scatterplot(
+        data=df, x="sepal length (cm)", y="sepal width (cm)", hue="species", style="species"
+    )
+    plt.title("Sepal Length vs Sepal Width by Species")
+    plt.tight_layout()
+    plt.show()
+
+# Main function to execute EDA
+def main():
+    iris_df = load_iris_data()
+    display_data_info(iris_df)
+    plot_distributions(iris_df)
+    plot_comparisons(iris_df)
+
+# Execute the main function
+if __name__ == "__main__":
+    main()
