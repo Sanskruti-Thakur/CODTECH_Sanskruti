@@ -12,6 +12,7 @@ Duration: December 2024 to January 2025
 # Overview of the Project
 
 Project: Exploratory Data Analysis of the Iris Dataset
+
 This project demonstrates a comprehensive exploratory data analysis (EDA) of the classic Iris dataset using Python. The Iris dataset is widely used in machine learning and statistics for classification tasks, as it contains information about the physical characteristics of three Iris flower species: Setosa, Versicolor, and Virginica.
 
 Key Objectives:
