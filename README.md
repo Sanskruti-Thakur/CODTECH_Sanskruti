@@ -27,6 +27,15 @@ Visualization and Pattern Recognition:
 4) Generate boxplots to compare feature distributions across different species.
 5) Create scatter plots to analyze relationships between features with respect to species.
 
+![image](https://github.com/user-attachments/assets/415b67d0-530a-40ff-9dd0-1dae8fa6c40e)
+![image](https://github.com/user-attachments/assets/f532dd13-ab4a-4115-9fd0-d401f1c3ca1f)
+![image](https://github.com/user-attachments/assets/d8e7338e-6446-4f74-ae87-f64779ad7fbe)
+![image](https://github.com/user-attachments/assets/acc1f384-15b0-483d-a095-ad836cdd63a7)
+![image](https://github.com/user-attachments/assets/171612cf-ad54-40d9-80dd-bb9ffbeedc1e)
+![image](https://github.com/user-attachments/assets/63022a4a-ac63-4960-8a3c-3a7f56ffd076)
+![image](https://github.com/user-attachments/assets/dbffa72a-5103-4eae-8499-d0e327af7265)
+
+
 Insights and Findings: The visualizations and statistics collectively provide insights into how different features contribute to the classification of Iris species.
 
 Tools and Libraries Used:
